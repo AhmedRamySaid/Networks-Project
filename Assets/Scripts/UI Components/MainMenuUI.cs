@@ -244,7 +244,7 @@ namespace UI_Components
 
             // Background image with rounded look
             Image fieldImage = usernameField.AddComponent<Image>();
-            fieldImage.color = new Color(0.27f, 0.23f, 0.45f, 0.9f);
+            fieldImage.color = new Color(0.27f, 0.23f, 0.45f, 1f);
             fieldImage.raycastTarget = true;
 
             // Add border
