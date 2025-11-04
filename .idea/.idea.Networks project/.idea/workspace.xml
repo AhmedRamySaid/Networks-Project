@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="073018ba-8cee-4e8c-a75b-1a3973a0820c" name="Changes" comment="">
+    <list default="true" id="073018ba-8cee-4e8c-a75b-1a3973a0820c" name="Changes" comment="Added assets from unity store">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Networks project/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Networks project/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Client.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Client.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI Components/MainMenuUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI Components/MainMenuUI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,8 +34,7 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock://D:/My Stuff/Computer science/Projects/Networks project/Assets/Scenes/ClientScene.unity" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/My Stuff/Computer science/Projects/Networks project/Assets/Scripts/UI Components/MainMenuUI.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/My Stuff/Computer science/Projects/Networks project/Assets/Scenes/GameScene.unity" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
@@ -116,7 +114,7 @@
       <updated>1762007668449</updated>
       <workItem from="1762007670122" duration="5813000" />
       <workItem from="1762215989726" duration="22000" />
-      <workItem from="1762291225974" duration="1277000" />
+      <workItem from="1762291225974" duration="2384000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <option name="closed" value="true" />
@@ -150,7 +148,23 @@
       <option name="project" value="LOCAL" />
       <updated>1762014231615</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Changed code so that it uses canvas inside the unity editor">
+      <option name="closed" value="true" />
+      <created>1762292683105</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1762292683105</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Added assets from unity store">
+      <option name="closed" value="true" />
+      <created>1762292700340</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1762292700340</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -181,6 +195,8 @@
     <MESSAGE value="Added main menu" />
     <MESSAGE value="Updated the colors in the main menu" />
     <MESSAGE value="Changed colors (again)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed colors (again)" />
+    <MESSAGE value="Changed code so that it uses canvas inside the unity editor" />
+    <MESSAGE value="Added assets from unity store" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added assets from unity store" />
   </component>
 </project>
