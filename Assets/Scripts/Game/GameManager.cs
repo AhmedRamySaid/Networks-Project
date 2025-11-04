@@ -31,7 +31,8 @@ namespace Game
 
         public void JoinGame(string serverIP)
         {
-            localClient = new Client(serverIP);
+            //todo: use serverIP
+            localClient = new Client("127.0.0.1");
             StartGame();
         }
 

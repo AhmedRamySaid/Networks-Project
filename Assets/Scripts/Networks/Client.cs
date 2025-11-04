@@ -16,6 +16,7 @@ namespace Networks
         private readonly string serverIP;
         private const int Port = 5555;
         private string logFilePath;
+        private uint nextSeqNum = 0;
 
         public Client(string serverIP)
         {
@@ -105,6 +106,23 @@ namespace Networks
             {
                 Debug.LogError("Failed to write log: " + e.Message);
             }
+        }
+        
+        public void SendMovement(Vector3 delta)
+        {
+            byte[] payload = Encoding.UTF8.GetBytes($"{delta.x},{delta.y},{delta.z}");
+            NetPacket packet = new NetPacket
+            {
+                msgType = MessageType.EVENT,
+                snapshotId = 0,
+                seqNum = nextSeqNum++,
+                serverTimestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
+                payload = payload,
+                payloadLength = (ushort)payload.Length
+            };
+
+            byte[] data = packet.ToBytes();
+            stream.Write(data, 0, data.Length);
         }
     }
 }
