@@ -63,9 +63,16 @@ namespace Game
             }
         }
 
-        public void ApplyMovement(int id, Vector3 deltaPos)
+        public void ApplyMovement(uint id, Vector3 position)
         {
-            
+            GameObject player = Players[id];
+            player.transform.position = position;
+        }
+
+        public void ApplyDeltaMovement(uint id, Vector3 deltaPos)
+        {
+            GameObject player = Players[id];
+            player.transform.position += deltaPos;
         }
 
         public void AddPlayer(uint id)
