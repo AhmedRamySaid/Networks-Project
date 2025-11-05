@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -6,102 +7,157 @@ using System.Text;
 using System.Threading;
 using UnityEngine;
 
-public class Server : MonoBehaviour
+namespace Networks
 {
-    private TcpListener server;
-    private Thread serverThread;
-    private bool isRunning = false;
-
-    public int port = 5555;
-    private string logFilePath;
-
-    void Start()
+    public class Server
     {
-        // Prepare log file path
-        logFilePath = Path.Combine(Application.persistentDataPath, "server_logs.txt");
-        LogToFile("=== Server Started ===");
+        public bool IsRunning = false;
 
-        serverThread = new Thread(StartServer);
-        serverThread.Start();
-    }
+        private UdpClient udpServer;
+        private Thread serverThread;
 
-    void StartServer()
-    {
-        try
+        private const int Port = 5555;
+        private string logFilePath;
+        private readonly Dictionary<IPEndPoint, uint> clientIds = new Dictionary<IPEndPoint, uint>();
+        private uint nextPlayerId = 1; // player ids start at 1, the client treats itself as 0
+
+        public void InitializeServer()
         {
-            server = new TcpListener(IPAddress.Any, port);
-            server.Start();
-            isRunning = true;
-            Debug.Log("Server started on port " + port);
-            LogToFile("Server listening on port " + port);
+            logFilePath = Path.Combine(Application.persistentDataPath, "server_logs.txt");
+            LogToFile("=== UDP Server Started ===");
 
-            while (isRunning)
+            IsRunning = true;
+            serverThread = new Thread(StartServer);
+            serverThread.Start();
+        }
+
+        private void StartServer()
+        {
+            try
             {
-                TcpClient client = server.AcceptTcpClient();
-                Debug.Log("Client connected!");
-                LogToFile("Client connected.");
+                udpServer = new UdpClient(Port);
+                Debug.Log($"UDP Server started on port {Port}");
+                LogToFile($"Server listening on UDP port {Port}");
 
-                Thread clientThread = new Thread(() => HandleClient(client));
-                clientThread.Start();
+                IPEndPoint remoteEP = new IPEndPoint(IPAddress.Any, 0);
+
+                while (IsRunning)
+                {
+                    byte[] receivedBytes = udpServer.Receive(ref remoteEP); // blocking call
+                    HandlePacket(receivedBytes, remoteEP);
+                }
+            }
+            catch (SocketException se)
+            {
+                if (IsRunning)
+                {
+                    Debug.LogError("Socket error: " + se.Message);
+                    LogToFile("Socket error: " + se.Message);
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("Server error: " + e.Message);
+                LogToFile("Server error: " + e.Message);
+            }
+            finally
+            {
+                udpServer?.Close();
+                LogToFile("=== UDP Server Stopped ===");
             }
         }
-        catch (Exception e)
-        {
-            Debug.LogError("Server error: " + e.Message);
-            LogToFile("Server error: " + e.Message);
-        }
-    }
 
-    void HandleClient(TcpClient client)
-    {
-        NetworkStream stream = client.GetStream();
-        byte[] buffer = new byte[1024];
-        int bytesRead;
-
-        try
+        private void HandlePacket(byte[] data, IPEndPoint sender)
         {
-            while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) != 0)
+            try
             {
-                string message = Encoding.ASCII.GetString(buffer, 0, bytesRead);
-                Debug.Log("Received from client: " + message);
-                LogToFile("[From Client] " + message);
+                // Convert bytes into a NetPacket
+                NetPacket packet = NetPacket.FromBytes(data);
+                
+                switch (packet.msgType)
+                {
+                    case (MessageType.CONNECT):
+                        if (((char)(packet.payload[0])).Equals('1')) // Established a connection
+                        {
+                            if (!clientIds.TryGetValue(sender, out uint playerId))
+                            {
+                                playerId = nextPlayerId++;
+                                clientIds[sender] = playerId;
+                                Debug.Log($"Registered new client {sender} with PlayerID {playerId}");
+                                LogToFile($"Registered new client {sender} with PlayerID {playerId}");
+                            }
+                        }
+                        else // Terminated the connection
+                        {
+                            //todo implement
+                        }
+                        break;
+                    default:
+                        break;
+                }
 
-                // Echo back
-                byte[] response = Encoding.ASCII.GetBytes("Server received: " + message);
-                stream.Write(response, 0, response.Length);
+                clientIds.TryGetValue(sender, out uint id);
+                byte[] idBytes = Encoding.ASCII.GetBytes($"ID:{id}."); // convert string to bytes
+                byte[] newPayload = new byte[idBytes.Length + packet.payload.Length];
+
+                // copy ID bytes first
+                Buffer.BlockCopy(idBytes, 0, newPayload, 0, idBytes.Length);
+
+                // copy the original payload after
+                Buffer.BlockCopy(packet.payload, 0, newPayload, idBytes.Length, packet.payload.Length);
+
+                // assign back to packet.payload
+                packet.payload = newPayload;
+                packet.payloadLength = (ushort)newPayload.Length;
+
+                // Broadcast to all other clients
+                BroadcastToClients(packet.ToBytes(), sender);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("Packet handling error: " + e.Message);
+                LogToFile("Packet handling error: " + e.Message);
             }
         }
-        catch (Exception e)
-        {
-            Debug.LogError("Client error: " + e.Message);
-            LogToFile("Client error: " + e.Message);
-        }
-        finally
-        {
-            client.Close();
-            Debug.Log("Client disconnected.");
-            LogToFile("Client disconnected.");
-        }
-    }
 
-    void OnApplicationQuit()
-    {
-        isRunning = false;
-        server?.Stop();
-        serverThread?.Abort();
-        LogToFile("=== Server Stopped ===");
-    }
+        private void BroadcastToClients(byte[] data, IPEndPoint sender)
+        {
+            foreach (var pair in clientIds)
+            {
+                var clientEP = pair.Key;
+                if (clientEP.Equals(sender)) continue; // skip sender
 
-    private void LogToFile(string text)
-    {
-        try
-        {
-            string entry = $"[{DateTime.Now:HH:mm:ss}] {text}\n";
-            File.AppendAllText(logFilePath, entry);
+                try
+                {
+                    udpServer.Send(data, data.Length, clientEP);
+                }
+                catch (Exception e)
+                {
+                    LogToFile($"Failed to send to {clientEP}: {e.Message}");
+                }
+            }
         }
-        catch (Exception e)
+
+        public void StopServer()
         {
-            Debug.LogError("Failed to write log: " + e.Message);
+            IsRunning = false;
+            udpServer?.Close();
+            serverThread?.Join();
+            LogToFile("=== UDP Server Stopped ===");
+            Debug.Log("UDP server stopped.");
+        }
+
+        private void LogToFile(string text)
+        {
+            try
+            {
+                string entry = $"[{DateTime.Now:HH:mm:ss}] {text}\n";
+                File.AppendAllText(logFilePath, entry);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("Failed to write log: " + e.Message);
+            }
         }
     }
 }

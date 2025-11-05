@@ -8,7 +8,7 @@ namespace UI_Components
     public class MainMenuGenerator : MonoBehaviour
     {
         public Canvas canvas;
-        private GameObject usernameField;
+        private GameObject ipAddressField;
         private GameObject hostButton;
         private GameObject joinButton;
 
@@ -34,8 +34,8 @@ namespace UI_Components
             // Create Menu Panel
             CreateMenuPanel();
 
-            // Create Username Input Field (Top-Left)
-            CreateUsernameField();
+            // Create IP Address Input Field (Top-Left)
+            CreateIPAddressField();
 
             // Create Centered Buttons
             CreateHostButton();
@@ -216,11 +216,11 @@ namespace UI_Components
             shadowImage.color = new Color(0, 0, 0, 0.5f);
         }
 
-        void CreateUsernameField()
+        void CreateIPAddressField()
         {
             // Parent container for the input field
-            usernameField = new GameObject("UsernameField");
-            RectTransform fieldRect = usernameField.AddComponent<RectTransform>();
+            ipAddressField = new GameObject("IPAddressField");
+            RectTransform fieldRect = ipAddressField.AddComponent<RectTransform>();
             fieldRect.SetParent(canvas.transform, false);
 
             // Position in top-left corner
@@ -231,7 +231,7 @@ namespace UI_Components
             fieldRect.sizeDelta = new Vector2(300, 50);
 
             // Background image with rounded look
-            Image fieldImage = usernameField.AddComponent<Image>();
+            Image fieldImage = ipAddressField.AddComponent<Image>();
             fieldImage.color = new Color(0.27f, 0.23f, 0.45f, 1f);
             fieldImage.raycastTarget = true;
 
@@ -249,7 +249,7 @@ namespace UI_Components
             borderImage.color = new Color(0.4f, 0.6f, 0.9f, 0.5f);
 
             // Add TMP_InputField component
-            TMP_InputField inputField = usernameField.AddComponent<TMP_InputField>();
+            TMP_InputField inputField = ipAddressField.AddComponent<TMP_InputField>();
 
             // Create Text Area (child object for text viewport)
             GameObject textArea = new GameObject("Text Area");
@@ -273,7 +273,7 @@ namespace UI_Components
             placeholderRect.offsetMax = Vector2.zero;
 
             TextMeshProUGUI placeholderText = placeholder.AddComponent<TextMeshProUGUI>();
-            placeholderText.text = "Enter Username...";
+            placeholderText.text = "Enter Host Server IP Address...";
             placeholderText.fontSize = 18;
             placeholderText.color = new Color(1f, 1f, 1f, 0.8f);
             placeholderText.alignment = TextAlignmentOptions.Left;
@@ -407,29 +407,22 @@ namespace UI_Components
         // Placeholder button functions
         void OnHostGameClicked()
         {
-            string username = GetUsername();
-            Debug.Log($"Host Game clicked! Username: {username}");
-
-            // TODO: Implement host game logic here
-            // Example: NetworkManager.Singleton.StartHost();
             canvas.gameObject.SetActive(false);
-            GameManager.Instance.StartGame();
+            GameManager.Instance.HostGame();
         }
 
         void OnJoinGameClicked()
         {
-            string username = GetUsername();
-            Debug.Log($"Join Game clicked! Username: {username}");
-
-            // TODO: Implement join game logic here
-            // Example: NetworkManager.Singleton.StartClient();
+            string address = GetIPAddress();
+            canvas.gameObject.SetActive(false); 
+            GameManager.Instance.JoinGame(address);
         }
 
-        string GetUsername()
+        string GetIPAddress()
         {
-            if (usernameField != null)
+            if (ipAddressField != null)
             {
-                TMP_InputField inputField = usernameField.GetComponent<TMP_InputField>();
+                TMP_InputField inputField = ipAddressField.GetComponent<TMP_InputField>();
                 if (inputField != null && !string.IsNullOrEmpty(inputField.text))
                 {
                     return inputField.text;
