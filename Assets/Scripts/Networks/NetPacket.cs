@@ -63,18 +63,34 @@ namespace Networks
                 if (version != VERSION)
                     throw new Exception("Version mismatch");
 
+                // Read the fixed fields first
+                MessageType msgType = (MessageType)reader.ReadByte();
+                uint snapshotId = reader.ReadUInt32();
+                uint seqNum = reader.ReadUInt32();
+                long serverTimestamp = reader.ReadInt64();
+
+                // Read payload length
+                ushort payloadLength = reader.ReadUInt16();
+
+                // Now read exactly payloadLength bytes
+                byte[] payload = reader.ReadBytes(payloadLength);
+
+                // Optional checksum
+                uint checksum = 0;
+                if (hasChecksum)
+                    checksum = reader.ReadUInt32();
+
+                // Build the packet instance
                 NetPacket packet = new NetPacket
                 {
-                    msgType = (MessageType)reader.ReadByte(),
-                    snapshotId = reader.ReadUInt32(),
-                    seqNum = reader.ReadUInt32(),
-                    serverTimestamp = reader.ReadInt64(),
-                    payloadLength = reader.ReadUInt16(),
-                    payload = reader.ReadBytes(reader.ReadUInt16())
+                    msgType = msgType,
+                    snapshotId = snapshotId,
+                    seqNum = seqNum,
+                    serverTimestamp = serverTimestamp,
+                    payloadLength = payloadLength,
+                    payload = payload,
+                    checksum = checksum
                 };
-
-                if (hasChecksum)
-                    packet.checksum = reader.ReadUInt32();
 
                 return packet;
             }

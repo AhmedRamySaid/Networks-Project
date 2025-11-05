@@ -72,9 +72,6 @@ namespace Networks
                     byte[] receivedBytes = udpClient.Receive(ref remoteEP); // blocking call
 
                     NetPacket packet = NetPacket.FromBytes(receivedBytes);
-
-                    Debug.Log($"[UDP] Received packet from {remoteEP.Address}:{remoteEP.Port}");
-                    LogToFile($"[From Server] Received packet ({receivedBytes.Length} bytes)");
                     
                     ParsePayload(packet);
                 }
@@ -103,13 +100,25 @@ namespace Networks
             switch (packet.msgType)
             {
                 case MessageType.CONNECT:
-                    if (parts[2].Equals((true).ToString())) // Established a connection
+                    if (((char)(parts[2][0])).Equals('1'))
                     {
-                        GameManager.Instance.AddPlayer(playerId);
+                        // a player established a connection
+                        // Forward to GameManager on the main thread
+                        UnityMainThreadDispatcher.Instance().Enqueue(() =>
+                        {
+                            GameManager.Instance.AddPlayer(playerId);
+                            LogToFile("Player connected with ID:" + playerId);
+                        });
                     }
-                    else // Terminated the connection
-                    {
-                        GameManager.Instance.RemovePlayer(playerId);
+                    else
+                    { 
+                        // A player terminated their connection
+                        // Forward to GameManager on the main thread
+                        UnityMainThreadDispatcher.Instance().Enqueue(() =>
+                        {
+                            GameManager.Instance.RemovePlayer(playerId);
+                            LogToFile("Player disconnected with ID:" + playerId);
+                        });
                     }
                     break;
                 case MessageType.SNAPSHOT:
@@ -143,9 +152,6 @@ namespace Networks
 
             byte[] data = Encoding.UTF8.GetBytes(message);
             udpClient.Send(data, data.Length);
-
-            Debug.Log("[UDP] Sent to server: " + message);
-            LogToFile("[Sent] " + message);
         }
 
         public void SendMovement(Vector3 delta)
@@ -165,16 +171,13 @@ namespace Networks
 
             byte[] data = packet.ToBytes();
             udpClient.Send(data, data.Length);
-
-            Debug.Log($"[UDP] Sent movement packet ({data.Length} bytes)");
-            LogToFile($"[Sent Movement] seqNum={packet.seqNum}, len={data.Length}");
         }
 
         public void SendConnection(bool establishedConnection)
         {
             if (!Connected || udpClient == null) return;
 
-            byte[] payload = Encoding.ASCII.GetBytes(establishedConnection.ToString());
+            byte[] payload = { (byte) (establishedConnection ? '1' : '0') };
             NetPacket packet = new NetPacket
             {
                 msgType = MessageType.CONNECT,

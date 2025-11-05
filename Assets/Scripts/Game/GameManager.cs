@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Networks;
@@ -62,7 +63,7 @@ namespace Game
             }
         }
 
-        public void ApplyMovement(int ID, Vector3 deltaPos)
+        public void ApplyMovement(int id, Vector3 deltaPos)
         {
             
         }
@@ -80,6 +81,11 @@ namespace Game
                 players.Remove(1);
                 Destroy(value);
             }
+        }
+
+        private void OnApplicationQuit()
+        {
+            if (server != null) server.StopServer();
         }
     }
 }

@@ -1,24 +1,34 @@
-﻿namespace Networks
-{
-    using System;
-    using System.Collections.Generic;
-    using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
+namespace Networks
+{
     public class UnityMainThreadDispatcher : MonoBehaviour
     {
-        private static UnityMainThreadDispatcher _instance;
-        private static readonly Queue<Action> _actions = new Queue<Action>();
+        private static UnityMainThreadDispatcher instance;
+        private static readonly Queue<Action> Actions = new Queue<Action>();
 
-        public static UnityMainThreadDispatcher Instance()
+        private void Awake()
         {
-            if (!_instance)
+            if (instance != null && instance != this)
             {
-                var obj = new GameObject("MainThreadDispatcher");
-                _instance = obj.AddComponent<UnityMainThreadDispatcher>();
-                DontDestroyOnLoad(obj);
+                Destroy(this.gameObject); // ensure only one exists
+                return;
             }
 
-            return _instance;
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+
+        /// <summary>
+        /// Access the dispatcher instance (must exist in the scene)
+        /// </summary>
+        public static UnityMainThreadDispatcher Instance()
+        {
+            if (instance == null)
+                throw new Exception("UnityMainThreadDispatcher must exist in the scene!");
+            return instance;
         }
 
         /// <summary>
@@ -26,19 +36,19 @@
         /// </summary>
         public void Enqueue(Action action)
         {
-            lock (_actions)
+            lock (Actions)
             {
-                _actions.Enqueue(action);
+                Actions.Enqueue(action);
             }
         }
 
         private void Update()
         {
-            lock (_actions)
+            lock (Actions)
             {
-                while (_actions.Count > 0)
+                while (Actions.Count > 0)
                 {
-                    _actions.Dequeue().Invoke();
+                    Actions.Dequeue().Invoke();
                 }
             }
         }

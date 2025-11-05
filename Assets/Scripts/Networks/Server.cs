@@ -73,18 +73,17 @@ namespace Networks
             {
                 // Convert bytes into a NetPacket
                 NetPacket packet = NetPacket.FromBytes(data);
-
-                LogToFile($"[From {sender.Address}:{sender.Port}] Packet received of {data.Length} bytes.");
-
+                
                 switch (packet.msgType)
                 {
                     case (MessageType.CONNECT):
-                        if (packet.payload.Equals((true).ToString())) // Established a connection
+                        if (((char)(packet.payload[0])).Equals('1')) // Established a connection
                         {
                             if (!clientIds.TryGetValue(sender, out uint playerId))
                             {
                                 playerId = nextPlayerId++;
                                 clientIds[sender] = playerId;
+                                Debug.Log($"Registered new client {sender} with PlayerID {playerId}");
                                 LogToFile($"Registered new client {sender} with PlayerID {playerId}");
                             }
                         }
@@ -92,6 +91,8 @@ namespace Networks
                         {
                             //todo implement
                         }
+                        break;
+                    default:
                         break;
                 }
 
