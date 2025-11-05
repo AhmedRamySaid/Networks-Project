@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="073018ba-8cee-4e8c-a75b-1a3973a0820c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Networks project/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Networks project/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/GameManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Networks/Client.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Networks/Client.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Networks/Server.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Networks/Server.cs" afterDir="false" />
-    </list>
+    <list default="true" id="073018ba-8cee-4e8c-a75b-1a3973a0820c" name="Changes" comment="More networks yay" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -40,7 +35,10 @@
 }</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/51fded79cd284d4d911c5949aff4cb2146ac00/2e/db75a0dd/ExceptionDispatchInfo.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://D:/My Stuff/Computer science/Projects/Networks project/Assets/Scripts/Game/GameManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Game/Player.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://D:/My Stuff/Computer science/Projects/Networks project/Assets/Scripts/Networks/Client.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/My Stuff/Computer science/Projects/Networks project/Assets/Scripts/Networks/Client.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
@@ -123,7 +121,7 @@
       <workItem from="1762007670122" duration="5813000" />
       <workItem from="1762215989726" duration="22000" />
       <workItem from="1762291225974" duration="8631000" />
-      <workItem from="1762327925021" duration="4858000" />
+      <workItem from="1762327925021" duration="5222000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <option name="closed" value="true" />
@@ -221,7 +219,15 @@
       <option name="project" value="LOCAL" />
       <updated>1762299763503</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="More networks yay">
+      <option name="closed" value="true" />
+      <created>1762333034399</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1762333034399</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -260,7 +266,8 @@
     <MESSAGE value="Now a server and a client get created" />
     <MESSAGE value="Refactoring" />
     <MESSAGE value="I am tired" />
-    <option name="LAST_COMMIT_MESSAGE" value="I am tired" />
+    <MESSAGE value="More networks yay" />
+    <option name="LAST_COMMIT_MESSAGE" value="More networks yay" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>
