@@ -48,7 +48,7 @@ namespace Game
         {
             //todo: use serverIP
             localClient = new Client("127.0.0.1");
-            StartGame();
+            if (localClient.Connected) StartGame();
         }
         
         private async void StartGame()
@@ -66,7 +66,7 @@ namespace Game
             while (localClient.Connected)   
             {
                 Vector3 currentPos = player.transform.position;
-                Vector3 deltaPos = lastSentPosition - currentPos;
+                Vector3 deltaPos = currentPos - lastSentPosition;
                 lastSentPosition = currentPos;
                 await Task.Run(() => localClient.SendMovement(deltaPos));
                 await Task.Delay((int)(SendInterval * 1000));

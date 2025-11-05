@@ -98,7 +98,7 @@ namespace Networks
             switch (packet.msgType)
             {
                 case MessageType.CONNECT:
-                    string[] connectParts = payloadStr.Split(new char[] { ':', '.' }, StringSplitOptions.RemoveEmptyEntries);
+                    string[] connectParts = payloadStr.Split(new char[] { ':', '/' }, StringSplitOptions.RemoveEmptyEntries);
                     uint connectPlayerId = uint.Parse(connectParts[1]);
                     
                     if (((char)(connectParts[2][0])).Equals('1'))
@@ -123,7 +123,7 @@ namespace Networks
                     }
                     break;
                 case MessageType.SNAPSHOT:
-                    string[] snapshotParts = payloadStr.Split(new char[] { ':', '.' }, StringSplitOptions.RemoveEmptyEntries);
+                    string[] snapshotParts = payloadStr.Split(new char[] { ':', '/' }, StringSplitOptions.RemoveEmptyEntries);
                     uint snapshotPlayerId = uint.Parse(snapshotParts[1]);
                     
                     // Parse payload into Vector3
@@ -131,10 +131,9 @@ namespace Networks
 
                     if (snapshotParts.Length == 3 && 
                         float.TryParse(vectorParts[0], out float x) &&
-                        float.TryParse(vectorParts[1], out float y) &&
-                        float.TryParse(vectorParts[2], out float z))
+                        float.TryParse(vectorParts[1], out float y))
                     {
-                        Vector3 delta = new Vector3(x, y, z);
+                        Vector3 delta = new Vector3(x, y, 1);
 
                         // Forward to GameManager on the main thread
                         UnityMainThreadDispatcher.Instance().Enqueue(() =>
@@ -205,7 +204,7 @@ namespace Networks
             byte[] payload = Encoding.ASCII.GetBytes($"{delta.x},{delta.y},{delta.z}");
             NetPacket packet = new NetPacket
             {
-                msgType = MessageType.EVENT,
+                msgType = MessageType.SNAPSHOT,
                 snapshotId = 0,
                 seqNum = nextSeqNum++,
                 serverTimestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
