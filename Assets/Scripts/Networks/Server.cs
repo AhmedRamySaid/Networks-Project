@@ -101,7 +101,7 @@ namespace Networks
                 }
 
                 clientIds.TryGetValue(sender, out uint id);
-                byte[] idBytes = Encoding.ASCII.GetBytes($"ID:{id}."); // convert string to bytes
+                byte[] idBytes = Encoding.ASCII.GetBytes($"ID:{id}/"); // convert string to bytes
                 byte[] newPayload = new byte[idBytes.Length + packet.payload.Length];
 
                 // copy ID bytes first
