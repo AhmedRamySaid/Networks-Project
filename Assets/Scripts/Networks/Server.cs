@@ -126,6 +126,7 @@ namespace Networks
 
         private void SendKeyframe(IPEndPoint sender)
         {
+            if (GameManager.Instance == null) return;
             if (clientIds.TryGetValue(sender, out uint playerId))
             {
                 if (GameManager.Instance.Players.TryGetValue(playerId, out GameObject player))
