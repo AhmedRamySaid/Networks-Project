@@ -4,13 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="073018ba-8cee-4e8c-a75b-1a3973a0820c" name="Changes" comment="Yay now they talk together :D">
+    <list default="true" id="073018ba-8cee-4e8c-a75b-1a3973a0820c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Networks project/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Networks project/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/ClientScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/ClientScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/ServerScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/ServerScene.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/GameManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Networks/Client.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Networks/Client.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Networks/Server.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Networks/Server.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Bin/Sword Scuffle_Data/Managed/Assembly-CSharp.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Bin/Sword Scuffle_Data/Managed/Assembly-CSharp.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bin/Sword Scuffle_Data/RuntimeInitializeOnLoads.json" beforeDir="false" afterPath="$PROJECT_DIR$/Bin/Sword Scuffle_Data/RuntimeInitializeOnLoads.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Bin/Sword Scuffle_Data/boot.config" beforeDir="false" afterPath="$PROJECT_DIR$/Bin/Sword Scuffle_Data/boot.config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bin/Sword Scuffle_Data/globalgamemanagers" beforeDir="false" afterPath="$PROJECT_DIR$/Bin/Sword Scuffle_Data/globalgamemanagers" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bin/Sword Scuffle_Data/globalgamemanagers.assets" beforeDir="false" afterPath="$PROJECT_DIR$/Bin/Sword Scuffle_Data/globalgamemanagers.assets" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bin/Sword Scuffle_Data/level0" beforeDir="false" afterPath="$PROJECT_DIR$/Bin/Sword Scuffle_Data/level0" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bin/Sword Scuffle_Data/resources.assets" beforeDir="false" afterPath="$PROJECT_DIR$/Bin/Sword Scuffle_Data/resources.assets" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bin/Sword Scuffle_Data/sharedassets0.assets" beforeDir="false" afterPath="$PROJECT_DIR$/Bin/Sword Scuffle_Data/sharedassets0.assets" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,20 +93,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Attach to Unity Editor.Attach to Unity Editor.executor": "Debug",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "XThreadsFramesViewSplitterKey": "0.14285715",
-    "git-widget-placeholder": "network",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Attach to Unity Editor.Attach to Unity Editor.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.14285715&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;network&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Standalone Player" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="$PROJECT_DIR$/Bin\Sword Scuffle.exe" />
@@ -133,10 +142,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="13016">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="13016" />
+      <option name="pid" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -156,7 +165,9 @@
       <workItem from="1762215989726" duration="22000" />
       <workItem from="1762291225974" duration="8631000" />
       <workItem from="1762327925021" duration="16127000" />
-      <workItem from="1762352921715" duration="12162000" />
+      <workItem from="1762352921715" duration="12840000" />
+      <workItem from="1762388886329" duration="79000" />
+      <workItem from="1762433904815" duration="1844000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <option name="closed" value="true" />
@@ -310,7 +321,15 @@
       <option name="project" value="LOCAL" />
       <updated>1762362808384</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Working!!!">
+      <option name="closed" value="true" />
+      <created>1762365384257</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1762365384257</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -356,26 +375,10 @@
     <MESSAGE value="Broadcast frameworks to the client that joins" />
     <MESSAGE value="Implemented snapshots and keyframes" />
     <MESSAGE value="Yay now they talk together :D" />
-    <option name="LAST_COMMIT_MESSAGE" value="Yay now they talk together :D" />
+    <MESSAGE value="Working!!!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Working!!!" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Networks/Server.cs</url>
-          <line>193</line>
-          <properties documentPath="D:\My Stuff\Computer science\Projects\Networks project\Assets\Scripts\Networks\Server.cs" containingFunctionPresentation="Method 'BroadcastToClients'">
-            <startOffsets>
-              <option value="7180" />
-            </startOffsets>
-            <endOffsets>
-              <option value="7224" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="51" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="Type#Game.GameManager" memberName="localClient" />
